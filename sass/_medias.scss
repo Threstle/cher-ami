@@ -1,0 +1,54 @@
+@import "_var.scss";
+
+body{
+	&:after{
+		@include absolute(0,0);
+		content: 'nope';
+		background-color:$black;
+		color:$white;
+	}
+}
+
+@media only screen and (orientation : landscape) {
+
+}
+@media only screen and (orientation : portrait) {
+
+}
+@media only screen and (min-width : $m-mobile) {
+    body{
+		&:after{
+			content: 'm-mobile';
+		}
+	}
+}
+@media only screen and (min-width : $m-tablet) {
+    body{
+		&:after{
+			content: 'm-tablet';
+		}
+	}
+}
+@media only screen and (min-width : $m-desktop) {
+    body{
+		&:after{
+			content: 'm-desktop';
+		}
+	}
+}
+@media only screen and (min-width : $l-desktop) {
+    body{
+		&:after{
+			content: 'l-desktop';
+		}
+	}
+}
+@media only screen and (min-width : $xl-desktop) {
+    body{
+		&:after{
+			content: 'xl-desktop';
+		}
+	}
+}
+
+

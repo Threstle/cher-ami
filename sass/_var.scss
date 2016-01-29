@@ -1,0 +1,25 @@
+@import "_font.scss";
+
+$xl-desktop : 1920px;
+$l-desktop : 1200px;
+$m-desktop : 992px;
+$m-tablet : 768px;
+$m-mobile : 320px;
+
+$black : #000000;
+$white : #FFFFFF;
+
+@mixin absolute($x,$y) {
+	position:absolute;
+	left:$x;
+	top:$y;
+}
+
+@mixin fullabsolute($z){
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:$z;
+}
