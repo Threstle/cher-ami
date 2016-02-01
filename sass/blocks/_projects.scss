@@ -2,16 +2,20 @@
 
 .project{
 	@include fullabsolute(0);
-	display:none;
-	
 	
 	&.front{
-		display: block;
+		z-index: 10;
 	}
+	
+
+	
+	// &.front{
+	// 	display: block;
+	// }
 
 	#project-content{
 		@include fullabsolute(1);
-    	background-color: rgba(7,59,88,0.7);
+    	//background-color: rgba(7,59,88,0.7);
 
     	#project-content-text{
     		margin-top: 500px;
@@ -19,7 +23,24 @@
     	}
 	}
 
-	iframe{
-		
+	video{
+		display: none;
 	}
+
+	canvas{
+		// @include fullabsolute(1);
+		border-radius: 34px;
+		&:after{
+			content:'';
+			@include fullabsolute(1);
+			background-color: rgba(7,59,88,0.7);
+		}
+	}
+	// video{
+	// 	@include fullabsolute(0);
+	// }
+
+	// iframe{
+		
+	// }
 }
