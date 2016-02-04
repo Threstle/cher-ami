@@ -1,25 +1,8 @@
 var Transition = function( exports )
 {
     container = [];
-    videos = [];
-
-    exports.switchContainer = function(){
-        var _old = container[0];
-        container[0] = container[1];
-        container[1] = _old;
-
-        container[0].addClass('front');
-        container[1].removeClass('front');
-
-        container[0].fadeIn(0);
-        container[1].fadeIn(0);
-
-        _old = videos[0];
-        videos[0] = videos[1];
-        videos[1] = _old;
-    }
-
-
+    exports.videos = [];
+    exports.flag;
 
     exports.init = function(projects,id){
         exports.length = projects.length;
@@ -29,35 +12,72 @@ var Transition = function( exports )
 
         exports.id = id;
 
-        videos[0] = new VideoBack();
-        videos[1] = new VideoBack();
+
+
+        this.videos[0] = new VideoBack();
+        this.videos[1] = new VideoBack();
+        //$(document).resize();
+         
+        p = this.projects[id];
+        var proj0 = MyApp.templates.project(p);
+        container[0].html(proj0);
+        this.videos[0].set(container[0].find('video'),container[0].find('canvas'));
+
+        p = this.projects[id];
+        var proj1 = MyApp.templates.project(p);
+        container[1].html(proj1);
+        this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
 
         this.goTo(id);
 
     }
 
+    exports.switchContainer = function(){
+        var _old = container[0];
+        container[0] = container[1];
+        container[1] = _old;
+
+        container[0].addClass('front');
+        container[1].removeClass('front');
+
+        // container[0].fadeIn(0);
+        // container[1].fadeIn(0);
+
+        _old = this.videos[0];
+        this.videos[0] = this.videos[1];
+        this.videos[1] = _old;
+        this.flag = false;
+
+    }
+
     exports.goTo = function(id){
-    
-        if(!id)id=exports.id;
-        exports.id = id;
+        var _this = this;
+       // if(!id)id=exports.id;
+        //exports.id = id;
 
         loopID();
 
-        console.log(id);
-        
-        p = this.projects[id];
+       
+        this.flag = true;
+        p = this.projects[exports.id];
         var proj0 = MyApp.templates.project(p);
       
 
 
         container[1].html(proj0);
-        videos[1].set(container[1].find('video'),container[1].find('canvas'));
-
-         setTimeout(function(){
-              container[0].fadeOut(500,function(){
-              exports.switchContainer();
-             })
-         },1000)
+        this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
+        this.videos[1].animateBack();
+        // this.videos[0].animate(function(){
+        //        exports.switchContainer();
+        // });
+        _this.videos[0].animate();
+        setTimeout(function(){
+          
+            exports.switchContainer();
+        },2000)
+        
+       // videos[1].animateBack();
+        
         
 
         
@@ -69,12 +89,12 @@ var Transition = function( exports )
     exports.next = function(){
 
     	exports.id++;
-    	exports.goTo();
+    	exports.goTo(exports.id);
     }
 
     exports.previous = function(){
     	exports.id--;
-    	exports.goTo();
+    	exports.goTo(exports.id);
     }
 
  //    function setBack(p){
@@ -83,8 +103,11 @@ var Transition = function( exports )
  //    }
 
     function loopID(){
-    	if(exports.id >= exports.length-1)exports.id = 0;
-    	else if(exports.id <= 0)exports.id = exports.length;
+    
+    	if(exports.id >= exports.length){
+            exports.id = 0;
+        }
+    	else if(exports.id < 0)exports.id = exports.length-1;
     }
 
  //    function switchTransition(){

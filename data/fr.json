@@ -3,12 +3,32 @@
 		{
 			"title":"projet0",
 			"desc":"projet0 description",
-			"video":"test.webm"
+			"video":"test"
 		},
 		{
 			"title":"projet1",
 			"desc":"projet1 description",
-			"video":"small.webm"
+			"video":"small"
+		},
+		{
+			"title":"projet2",
+			"desc":"projet2 description",
+			"video":"test"
+		},
+		{
+			"title":"projet3",
+			"desc":"projet3 description",
+			"video":"small"
+		},
+		{
+			"title":"projet4",
+			"desc":"projet2 description",
+			"video":"test"
+		},
+		{
+			"title":"projet5",
+			"desc":"projet3 description",
+			"video":"small"
 		}
 	]
 }

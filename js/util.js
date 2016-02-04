@@ -1,4 +1,6 @@
 
+// var DEEPBLUE = "rgba(7,)";
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -7,7 +9,7 @@ function getParameterByName(name) {
 }
 var DEBUG = location.search.lastIndexOf("dev") != -1;// != null || getParameterByName("debug") !=null;
 var PROJET = parseInt( getParameterByName("id") || getParameterByName("scene") );
-PROJET = isNaN(PROJET)?1:PROJET;
+PROJET = isNaN(PROJET)?0:PROJET;
 
 function scale(x,min,max,nuMin,nuMax){
     var nuX = nuMin - nuMax;

@@ -16,6 +16,8 @@
   "devDependencies": {
     "jquery": "~2.1.4",
     "underscore": "~1.8.3",
-    "handlebars": "~3.0.0"
+    "handlebars": "~3.0.0",
+    "raphael": "~2.1.4",
+    "pixi.js": "pixi#~3.0.9"
   }
 }
