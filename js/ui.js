@@ -4,12 +4,7 @@ var UI = function( exports ){
     var goalReached;
     var paper, size;
 
-    var line,
-        lineStart   = {x:0, y:0, ratioX:0, ratioY:0},
-        lineEnd     = {x:0, y:0, ratioX:0, ratioY:0};
-
-    var start, goal, cursor, ratioRadius;
-    var currentId;
+    exports.ratio = 0;
 
 
     exports.init = function( w,h) {
@@ -22,12 +17,31 @@ var UI = function( exports ){
 
     exports.drawLine = function(){
         paper.clear();
-        console.log(size);
+       
          line = paper.path(" M"+size.w*0.25+","+0+" L" +size.w*0.45+","+size.h).attr({
+            'stroke-width':'1',
+            'stroke':"grey",
+            'stroke-linecap': 'round'
+        });
+
+         
+         var pos = getPosAlongPath(this.ratio,size.w*0.25,0,size.w*0.45,size.h);
+
+         lineFront = paper.path(" M"+size.w*0.25+","+0+" L" +pos.x+","+pos.y).attr({
             'stroke-width':'3',
             'stroke':"white",
             'stroke-linecap': 'round'
         });
+    }
+
+    exports.update = function(){
+         var _this = this;
+         ratio = (Transition.id+1)/(Transition.length+1);
+
+         TweenMax.to(this, 2,{ratio:ratio,onUpdate:function(){
+            _this.drawLine();
+         }});
+
     }
 
     exports.resize = function(){

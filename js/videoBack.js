@@ -1,6 +1,8 @@
 var VideoBack = function()
 {
     this.draw(this);
+    var back = document.createElement('canvas');
+    var backcontext = back.getContext('2d');
 };
 
 VideoBack.prototype.set = function(v,c){
@@ -8,6 +10,12 @@ VideoBack.prototype.set = function(v,c){
     this.canvas = c[0];
     this.opacity = 0.5;
     this.c = this.canvas.getContext('2d');
+
+    if(window.isIpad){
+        this.video = new Image(this.canvasWidth,this.canvasHeight);
+        this.video.src = v[0].poster;
+    }
+
 
     this.resize();
 
@@ -29,7 +37,7 @@ VideoBack.prototype.set = function(v,c){
 
 VideoBack.prototype.animate = function(cb){
 
-        this.left = {
+    this.left = {
         a:{x:this.canvasWidth*0.25,y:0},
         b:{x:this.canvasWidth*0.45,y:this.canvasHeight},
         c:{x:this.canvasWidth*0.45,y:this.canvasHeight},
@@ -39,12 +47,12 @@ VideoBack.prototype.animate = function(cb){
     this.right = {
         a:{x:this.canvasWidth,y:0},
         b:{x:this.canvasWidth,y:this.canvasHeight},
-        c:{x:this.canvasWidth,y:this.canvasHeight},
-        d:{x:this.canvasWidth,y:0}
+        c:{x:this.canvasWidth*1.45,y:this.canvasHeight},
+        d:{x:this.canvasWidth*1.25,y:0}
     }
 
-    TweenMax.to(this.left.c,2,{x:0});
-    TweenMax.to(this.left.d,2,{x:0});
+    TweenMax.to(this.left.c,2,{x:0-this.canvasWidth*0.25});
+    TweenMax.to(this.left.d,2,{x:0-this.canvasWidth*0.45});
 
     TweenMax.to(this.right.c,2,{x:this.canvasWidth*0.45});
     TweenMax.to(this.right.d,2,{x:this.canvasWidth*0.25});
@@ -53,22 +61,23 @@ VideoBack.prototype.animate = function(cb){
 
 VideoBack.prototype.animateBack = function(){
         this.opacity = 1;
-     TweenMax.to(this, 2,{opacity:0.5});
-
+     TweenMax.to(this, 3,{opacity:0.5});
+     
 }
 
 VideoBack.prototype.draw = function() {
     var _this = this;
 
     if(!_this.video||!_this.canvas||!_this.c){
-        console.log("nope");
+
     }
     else{
         _this.resize();
         //_this.c.save();
-        _this.c.drawImage(_this.video,0,0,_this.canvasWidth,_this.canvasHeight);
-
+        _this.c.drawImage(_this.video,-_this.opacity*250,-_this.opacity*250,_this.canvasWidth+_this.opacity*500,_this.canvasHeight+_this.opacity*500);
+       
            _this.c.fillStyle = "rgba(7,59,188,"+this.opacity+")";
+          // _this.c.globalCompositeOperation = "color";
       _this.c.fillRect(0,0,_this.canvasWidth,_this.canvasHeight);
      
 

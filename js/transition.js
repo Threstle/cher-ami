@@ -33,6 +33,7 @@ var Transition = function( exports )
     }
 
     exports.switchContainer = function(){
+        $(window).resize();
         var _old = container[0];
         container[0] = container[1];
         container[1] = _old;
@@ -42,6 +43,8 @@ var Transition = function( exports )
 
         // container[0].fadeIn(0);
         // container[1].fadeIn(0);
+        container[0].removeClass('backTransition');
+        container[1].removeClass('frontTransition');
 
         _old = this.videos[0];
         this.videos[0] = this.videos[1];
@@ -61,20 +64,26 @@ var Transition = function( exports )
         this.flag = true;
         p = this.projects[exports.id];
         var proj0 = MyApp.templates.project(p);
-      
-
-
         container[1].html(proj0);
         this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
-        this.videos[1].animateBack();
-        // this.videos[0].animate(function(){
-        //        exports.switchContainer();
-        // });
-        _this.videos[0].animate();
         setTimeout(function(){
-          
-            exports.switchContainer();
-        },2000)
+
+            container[1].addClass('backTransition');
+            container[0].addClass('frontTransition');
+           
+            _this.videos[1].animateBack();
+            // this.videos[0].animate(function(){
+            //        exports.switchContainer();
+            // });
+            UI.update(); 
+            _this.videos[0].animate();
+            setTimeout(function(){
+              
+                exports.switchContainer();
+            },2000)
+        },0)
+
+  
         
        // videos[1].animateBack();
         

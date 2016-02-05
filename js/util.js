@@ -19,3 +19,12 @@ function scale(x,min,max,nuMin,nuMax){
     return nuX;
     
 }
+
+function lerp ( t, a, b ){ return a + t * ( b - a ); }
+
+function getPosAlongPath(ratio,x1,y1,x2,y2){
+
+        return {x : lerp( ratio, x1,x2),
+                y : lerp( ratio, y1,y2) };
+
+    }
