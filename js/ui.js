@@ -5,7 +5,7 @@ var UI = function( exports ){
     var paper, size;
 
     exports.ratio = 0;
-
+    exports.progress = 0;
 
     exports.init = function( w,h) {
 
@@ -35,13 +35,20 @@ var UI = function( exports ){
     }
 
     exports.update = function(){
-         var _this = this;
-         ratio = (Transition.id+1)/(Transition.length+1);
+        var _this = this;
+        ratio = (Transition.id+1)/(Transition.length+1);
 
-         TweenMax.to(this, 2,{ratio:ratio,onUpdate:function(){
+        TweenMax.to(this, 2,{ratio:ratio,onUpdate:function(){
             _this.drawLine();
-         }});
+        }});
 
+    }
+
+    exports.updateInput = function(input){
+        this.progress = input;
+        this.ratio = (Transition.id+1)/(Transition.length+1) + this.progress/(Transition.length+1);
+        
+        this.drawLine();
     }
 
     exports.resize = function(){

@@ -3,6 +3,8 @@ var VideoBack = function()
     this.draw(this);
     var back = document.createElement('canvas');
     var backcontext = back.getContext('2d');
+
+
 };
 
 VideoBack.prototype.set = function(v,c){
@@ -35,7 +37,9 @@ VideoBack.prototype.set = function(v,c){
 
 }
 
-VideoBack.prototype.animate = function(cb){
+VideoBack.prototype.animate = function(input){
+    this.opacity = 0.5;
+    input = Math.abs(input);
 
     this.left = {
         a:{x:this.canvasWidth*0.25,y:0},
@@ -51,17 +55,48 @@ VideoBack.prototype.animate = function(cb){
         d:{x:this.canvasWidth*1.25,y:0}
     }
 
-    TweenMax.to(this.left.c,2,{x:0-this.canvasWidth*0.25});
-    TweenMax.to(this.left.d,2,{x:0-this.canvasWidth*0.45});
+    // TweenMax.to(this.left.c,2,{x:0-this.canvasWidth*0.25});
+    // TweenMax.to(this.left.d,2,{x:0-this.canvasWidth*0.45});
+    
+    //console.log(input);
 
-    TweenMax.to(this.right.c,2,{x:this.canvasWidth*0.45});
-    TweenMax.to(this.right.d,2,{x:this.canvasWidth*0.25});
+    input = 1 - input;
+
+    //input = Math.abs(input); 
+    console.log(input);
+
+    this.left.c.x = scale(input,0,1,this.canvasWidth*0.45,-this.canvasWidth*0.25);
+    this.left.d.x = scale(input,0,1,this.canvasWidth*0.25,-this.canvasWidth*0.25);
+
+    this.right.c.x = scale(input,0,1,this.canvasWidth*1.45,-this.canvasWidth*0.25);
+    this.right.d.x = scale(input,0,1,this.canvasWidth*1.25,-this.canvasWidth*0.45);
+
+    // TweenMax.to(this.right.c,2,{x:this.canvasWidth*0.45});
+    // TweenMax.to(this.right.d,2,{x:this.canvasWidth*0.25});
     
 }
 
-VideoBack.prototype.animateBack = function(){
-        this.opacity = 1;
-     TweenMax.to(this, 3,{opacity:0.5});
+VideoBack.prototype.animateBack = function(input){
+
+        input = Math.abs(input);
+
+    this.left = {
+        a:{x:this.canvasWidth*0.25,y:0},
+        b:{x:this.canvasWidth*0.45,y:this.canvasHeight},
+        c:{x:this.canvasWidth*0.45,y:this.canvasHeight},
+        d:{x:this.canvasWidth*0.25,y:0}
+    }
+
+    this.right = {
+        a:{x:this.canvasWidth,y:0},
+        b:{x:this.canvasWidth,y:this.canvasHeight},
+        c:{x:this.canvasWidth*1.45,y:this.canvasHeight},
+        d:{x:this.canvasWidth*1.25,y:0}
+    }
+
+        this.opacity = 1 - (input*0.5);
+        console.log(this.opacity);
+     //TweenMax.to(this, 3,{opacity:1-(input*0.5)});
      
 }
 
@@ -76,9 +111,9 @@ VideoBack.prototype.draw = function() {
         //_this.c.save();
         _this.c.drawImage(_this.video,-_this.opacity*250,-_this.opacity*250,_this.canvasWidth+_this.opacity*500,_this.canvasHeight+_this.opacity*500);
        
-           _this.c.fillStyle = "rgba(7,59,188,"+this.opacity+")";
+       //    _this.c.fillStyle = "rgba(7,59,188,"+this.opacity+")";
           // _this.c.globalCompositeOperation = "color";
-      _this.c.fillRect(0,0,_this.canvasWidth,_this.canvasHeight);
+     // _this.c.fillRect(0,0,_this.canvasWidth,_this.canvasHeight);
      
 
         _this.c.globalCompositeOperation = "destination-out";

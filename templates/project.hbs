@@ -6,4 +6,8 @@
 </div>
 
 <canvas id="canvas"></canvas>
-<video autoplay preload="auto" muted src="src/video/{{this.video}}.mp4" poster="src/img/{{this.poster}}.jpg"></video>
+<video preload="auto" muted  poster="src/img/{{this.poster}}.jpg">
+		 <source src="src/video/WEBM/{{this.video}}.webm" type="video/webm">
+	 <source src="src/video/MP4/{{this.video}}.mp4" type="video/mp4">
+
+</video>
