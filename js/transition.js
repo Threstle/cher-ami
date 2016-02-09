@@ -12,52 +12,14 @@ var Transition = function( exports )
         container[2] = $('#project-3');
 
         exports.id = id;
+        exports.newCont = 0;
 
         this.videos[0] = new VideoBack();
         this.videos[1] = new VideoBack();
         this.videos[2] = new VideoBack();
-        //$(document).resize();
-         
-        // p = this.projects[id];
-        // var proj0 = MyApp.templates.project(p);
-        // container[0].html(proj0);
-        // this.videos[0].set(container[0].find('video'),container[0].find('canvas'));
 
-        // p = this.projects[id];
-        // var proj1 = MyApp.templates.project(p);
-        // container[1].html(proj1);
-        // this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
-
-
-
-        // this.videos[0].set(container[0].find('video'),container[0].find('canvas'));
-        // this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
-        // this.videos[2].set(container[2].find('video'),container[2].find('canvas'));
 
         this.goTo(id,true);
-
-    }
-
-    exports.switchContainer = function(){
-        // $(window).resize();
-        // var _old = container[0];
-        // container[0] = container[1];
-        // container[1] = _old;
-
-        // container[0].addClass('front');
-        // container[1].removeClass('front');
-
-        // // container[0].fadeIn(0);
-        // // container[1].fadeIn(0);
-        // container[0].removeClass('backTransition');
-        // container[1].removeClass('frontTransition');
-
-        // _old = this.videos[0];
-        // this.videos[0] = this.videos[1];
-        // this.videos[1] = _old;
-        // this.flag = false;
-
-
 
     }
 
@@ -66,35 +28,24 @@ var Transition = function( exports )
         exports.input = input;
         this.videos[0].animate(input);
 
-        $(container[0]).find('#project-content').css('opacity',1-Math.abs(input*2));
+        $(container[0]).find('#project-content').css('opacity', 1-Math.abs(input*4));
+      //  this.videos[0].opacity = 1 - input;
 
         if(input < 0){
-          //  this.videos[2].opacity = 0;
+            
             $(this.videos[2].canvas).css('display','none');
             $(this.videos[1].canvas).css('display','block');
             this.videos[1].animateBack(input);
 
-            $(container[1]).find('#project-content').css('opacity',Math.abs(input*2));
+          //  $(container[1]).find('#project-content').css('opacity',Math.abs(input*4));
         }
         else{
             $(this.videos[1].canvas).css('display','none');
             $(this.videos[2].canvas).css('display','block');
-            $(container[2]).find('#project-content').css('opacity',Math.abs(input*2));
+           // $(container[2]).find('#project-content').css('opacity',Math.abs(input*4));
            // this.videos[1].opacity = 0;
             this.videos[2].animateBack(input);
         }
-
-        // if(input == 1){
-        //     this.id = this.idN;
-        //     this.goTo();
-        // }
-        // else if(input == -1){
-        //     this.id = this.idP;
-        //     this.goTo();
-        // }
-        
-        // this.videos[2].animate(input);
-      //  this.videos[1].animateBack(input);
 
 
     }
@@ -113,32 +64,31 @@ var Transition = function( exports )
         var projN = MyApp.templates.project(pN);
         var projP = MyApp.templates.project(pP);
 
-        // container[1].html(proj)
-        // container[2].html(projN)
-        // container[3].html(projP)
-
-        // if(exports.input>0)container[0] = container[2];
-        // if(exports.input<0)container[0] = container[1];
+   
 
         if(!first){
+           
             var _old = container[0];
             $(container[0]).removeClass('front');
-            container[0] = container[2];
-            container[2] = _old;
+            container[0] = container[this.newCont];
+            container[this.newCont] = _old;
             $(container[0]).addClass('front');
 
             _old = this.videos[0];
-            this.videos[0] = this.videos[2];
-            this.videos[2] = _old;
-
+            this.videos[0] = this.videos[this.newCont];
+            this.videos[this.newCont] = _old;
+            if(this.videos[1].video.play)this.videos[0].video.play();
         }
         else{
+
             container[0].html(proj);
             this.videos[0].set(container[0].find('video'),container[0].find('canvas'));
+            $(this.videos[0].video).on('canplaythrough',function(){
+                 this.play();
+            });
         }
 
 
-        //container[0].html(proj);
         container[1].html(projP);
         container[2].html(projN);
 
@@ -146,49 +96,31 @@ var Transition = function( exports )
         this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
         this.videos[2].set(container[2].find('video'),container[2].find('canvas'));
 
-        this.videos[0].video.play();
 
-        this.videos[1].video.play();
-        this.videos[2].video.play();
-        // this.videos[1].video.pause();
-        // this.videos[2].video.pause();
+        // if(this.videos[1].video.play)
+        // if(this.videos[2].video.play)
 
-        //
-        this.updateInput(0);
-        // loopID();
-       // $(window).resize();
-       
-        // this.flag = true;
-        // p = this.projects[exports.id];
-        // var proj0 = MyApp.templates.project(p);
-        // container[1].html(proj0);
-        // this.videos[1].set(container[1].find('video'),container[1].find('canvas'));
-        // setTimeout(function(){
+        var _this = this;
+        $(this.videos[1].video).on('canplaythrough',function(){
+            this.play();
 
-        //     container[1].addClass('backTransition');
-        //     container[0].addClass('frontTransition');
            
-        //     _this.videos[1].animateBack();
-        //     // this.videos[0].animate(function(){
-        //     //        exports.switchContainer();
-        //     // });
-        //     UI.update(); 
-        //     _this.videos[0].animate();
-        //     setTimeout(function(){
-              
-        //         exports.switchContainer();
-        //     },2000)
-        // },0)
+        });
 
-  
+        $(_this.videos[2].video).on('canplaythrough',function(){
+                _this.updateInput(0);
+                this.play();
+                _this.flag = false;
 
+
+        });
         
         
+        if(!first){
+             $(window).resize();
+         }
 
-        
-        
-
-            	
+         
     }
 
     exports.next = function(){
@@ -202,10 +134,6 @@ var Transition = function( exports )
     	exports.goTo(exports.id);
     }
 
- //    function setBack(p){
- //        var projectFront = MyApp.templates.project(p);
- //        $('#project-1').html(projectFront);
- //    }
 
     function loopID(){
         exports.idN = exports.id+1;
@@ -224,17 +152,7 @@ var Transition = function( exports )
         console.log(exports.idP);
     }
 
- //    function switchTransition(){
- //        if(currentProject == 0)setCurrent(1);
- //        else setCurrent(0);
- //    }
 
- //    function setCurrent(id){
- //        currentProject = id;
- //        $('.project').removeClass('front');
- //        container[id].addClass('front');
-
- //    }
 
 
 

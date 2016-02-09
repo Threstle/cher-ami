@@ -5,9 +5,10 @@
 	</div>
 </div>
 
-<canvas id="canvas"></canvas>
-<video preload="auto" muted  poster="src/img/{{this.poster}}.jpg">
+<canvas id="canvas" moz-opaque></canvas>
+<video preload="auto" muted loop poster="dist/img/{{this.poster}}.png">
 		 <source src="src/video/WEBM/{{this.video}}.webm" type="video/webm">
-	 <source src="src/video/MP4/{{this.video}}.mp4" type="video/mp4">
+		 <source src="src/video/MP4/{{this.video}}.mp4" type="video/mp4">
+	 
 
 </video>

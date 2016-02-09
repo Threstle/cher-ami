@@ -53,23 +53,28 @@ var UI = function( exports ){
 
     exports.resize = function(){
 
-        var C = 1;        // canvas width to viewport width ratio
-        var W_TO_H = 1/1;   // canvas width to canvas height ratio
-        var el = this.canvas;
+    var C = 1.1;        // canvas width to viewport width ratio
+    var W_TO_H = 16/9;   // canvas width to canvas height ratio
+    
+    if(window.isIpad){
+        C = 1.5;
+    }
+
+    var el = this.canvas;
 
         this.viewportWidth = window.innerWidth;
         this.viewportHeight = window.innerHeight;
 
-        this.canvasWidth = this.viewportWidth * C;
-        this.canvasHeight = this.canvasWidth / W_TO_H;
+        this.canvasWidth = Math.floor(this.viewportWidth * C);
+        this.canvasHeight = Math.floor(this.canvasWidth / W_TO_H);
 
         var el = $('svg')[0];
 
         el.style.position = "fixed";
         el.setAttribute("width", this.canvasWidth);
         el.setAttribute("height", this.canvasHeight);
-        el.style.top = (this.viewportHeight - this.canvasHeight) / 2;
-        el.style.left = (this.viewportWidth - this.canvasWidth) / 2;
+        el.style.top = Math.floor((this.viewportHeight - this.canvasHeight) / 2);
+        el.style.left = Math.floor((this.viewportWidth - this.canvasWidth) / 2);
         
         size.w = this.canvasWidth;
         size.h = this.canvasHeight; 

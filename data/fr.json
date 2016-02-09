@@ -3,38 +3,38 @@
 		{
 			"title":"projet0",
 			"desc":"projet0 description",
-			"video":"arte",
-			"poster":"poster1"
+			"video":"intro",
+			"poster":"intro"
 		},
 		{
 			"title":"projet1",
 			"desc":"projet1 description",
-			"video":"jpgaultier",
-			"poster":"poster2"
+			"video":"tetro",
+			"poster":"tetro"
 		},
 		{
 			"title":"projet2",
 			"desc":"projet2 description",
-			"video":"neuflize",
-			"poster":"poster3"
+			"video":"volvic",
+			"poster":"volvic"
 		},
 		{
 			"title":"projet3",
 			"desc":"projet3 description",
 			"video":"schneider",
-			"poster":"poster4"
+			"poster":"schneider"
 		},
 		{
 			"title":"projet4",
 			"desc":"projet2 description",
 			"video":"shortjourney",
-			"poster":"poster5"
+			"poster":"shortjourney"
 		},
 		{
 			"title":"projet5",
 			"desc":"projet3 description",
 			"video":"tempstrajet",
-			"poster":"poster3"
+			"poster":"tempstrajet"
 		}
 	]
 }
